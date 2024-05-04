@@ -4,15 +4,17 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Container,
   Grid,
   Typography,
 } from "@mui/material";
+import Image from "next/image";
+import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 
 const TopRatedDoctors = async () => {
   const res = await fetch("http://localhost:5000/api/v1/doctor?page=1&limit=3");
   const { data: doctors } = await res.json();
+
   return (
     <Box
       sx={{
@@ -37,35 +39,61 @@ const TopRatedDoctors = async () => {
           and top-quality surgery facilities right here.
         </Typography>
       </Box>
-      <Container>
+      <Container
+        sx={{
+          margin: "30px auto",
+        }}
+      >
         <Grid container spacing={2}>
           {doctors.map((doctor: any) => (
             <Grid item key={doctor.id} md={4}>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  component="img"
-                  alt="green iguana"
-                  height="140"
-                  image="/static/images/cards/contemplative-reptile.jpg"
-                />
+              <Card>
+                <Box>
+                  <Image
+                    src={doctor.profilePhoto}
+                    alt="doctor profile"
+                    width={500}
+                    height={100}
+                  />
+                </Box>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                    src={doctor.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
+                    {doctor.qualification}, {doctor.designation}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" mt={1}>
+                    <AddLocationAltOutlinedIcon /> {doctor.address}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
+                <CardActions
+                  sx={{
+                    justifyContent: "center",
+                    px: 2,
+                  }}
+                >
+                  <Button>Booked Now</Button>
+                  <Button variant="outlined">View Profile</Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
+        <Box
+          sx={{
+            textAlign: "center",
+          }}
+        >
+          <Button
+            sx={{
+              marginTop: "20px",
+            }}
+            variant="outlined"
+          >
+            View more
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
