@@ -1,4 +1,8 @@
+"use client";
+
 import assets from "@/assets";
+import { loginUser } from "@/services/actions/loginUser";
+import { storeUserInfo } from "@/services/auth.services";
 import {
   Box,
   Button,
@@ -10,8 +14,28 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+export type FormValues = {
+  email: string;
+  password: string;
+};
 
 const LoginPage = () => {
+  const { register, handleSubmit } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    // console.log(data);
+    try {
+      const res = await loginUser(data);
+      if (res?.data?.accessToken) {
+        storeUserInfo({ accessToken: res?.data?.accessToken });
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
   return (
     <Container>
       <Stack
@@ -47,7 +71,7 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <TextField
@@ -56,6 +80,7 @@ const LoginPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("email")}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -65,6 +90,7 @@ const LoginPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("password")}
                   />
                 </Grid>
               </Grid>
@@ -82,6 +108,7 @@ const LoginPage = () => {
                 sx={{
                   marginY: "10px",
                 }}
+                type="submit"
               >
                 Login
               </Button>

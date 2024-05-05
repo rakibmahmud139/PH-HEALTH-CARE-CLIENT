@@ -38,7 +38,7 @@ const Specialist = async () => {
         <Stack direction="row" gap={4} mt={5}>
           {specialties.map((specialty: Specialist) => (
             <Box
-              key={specialty.id}
+              key={specialty?.id}
               sx={{
                 flex: 1,
                 width: "150px",
@@ -60,14 +60,14 @@ const Specialist = async () => {
               }}
             >
               <Image
-                src={specialty.icon}
+                src={specialty?.icon}
                 width={100}
                 height={100}
                 alt="specialty icon"
               />
               <Box>
                 <Typography component="p" fontWeight={600} fontSize={18} mt={2}>
-                  {specialty.title}
+                  {specialty?.title}
                 </Typography>
               </Box>
             </Box>
