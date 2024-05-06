@@ -14,7 +14,9 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 export type FormValues = {
   email: string;
@@ -22,6 +24,7 @@ export type FormValues = {
 };
 
 const LoginPage = () => {
+  const router = useRouter();
   const { register, handleSubmit } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -29,7 +32,9 @@ const LoginPage = () => {
     try {
       const res = await loginUser(data);
       if (res?.data?.accessToken) {
+        toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
+        router.push("/");
       }
     } catch (err: any) {
       console.error(err);

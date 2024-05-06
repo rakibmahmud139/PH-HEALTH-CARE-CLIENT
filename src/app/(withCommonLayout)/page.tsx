@@ -10,8 +10,8 @@ const HomePage = () => {
       <HeroSection />
       <Specialist />
       <TopRatedDoctors />
-      <WhyUs />
-      <HowItWorks />
+      {/* <WhyUs /> */}
+      {/* <HowItWorks /> */}
     </>
   );
 };
