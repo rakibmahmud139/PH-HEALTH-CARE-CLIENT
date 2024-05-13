@@ -46,7 +46,7 @@ const Specialist = async () => {
                 border: "1px solid rgba(250, 250, 250, 1)",
                 borderRadius: "10px",
                 textAlign: "center",
-                padding: "40px 10px",
+                padding: "30px 10px",
                 "& img": {
                   height: "50px",
                   width: "50px",
@@ -54,7 +54,7 @@ const Specialist = async () => {
                 },
                 "&:hover": {
                   border: "1px solid blue",
-                  padding: "40px 10px",
+                  padding: "30px 10px",
                   borderRadius: "10px",
                 },
               }}

@@ -36,7 +36,7 @@ const TopRatedDoctors = async () => {
           Access to experts physicians and surgeons, advanced technologies
         </Typography>
         <Typography component="p" fontSize={18} fontWeight={400}>
-          and top-quality surgery facilities right here.
+          and top-quality surgery facilities right here!.
         </Typography>
       </Box>
       <Container
@@ -52,12 +52,12 @@ const TopRatedDoctors = async () => {
                   <Image
                     src={doctor?.profilePhoto}
                     width={500}
-                    height={500}
+                    height={10}
                     alt="doctor profile"
                   />
                 </Box>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h5" component="h1">
                     {doctor?.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
