@@ -1,51 +1,21 @@
-import {
-  Box,
-  Toolbar,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-} from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import assets from "@/assets";
+import { UserRole } from "@/types";
+import { drawerItems } from "@/utils/drawerItems";
+import { Box, List, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import SidebarItem from "./SidebarItem";
+import { getUserInfo } from "@/services/auth.services";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
-  const drawer = (
-    <div>
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const { role } = getUserInfo() as any;
+    setUserRole(role);
+  }, []);
+
   return (
     <Box>
       <Stack
@@ -71,7 +41,11 @@ const Sidebar = () => {
           PH Health Care
         </Typography>
       </Stack>
-      {drawer}
+      <List>
+        {drawerItems(userRole as UserRole).map((item, index) => (
+          <SidebarItem key={index} item={item} />
+        ))}
+      </List>
     </Box>
   );
 };
