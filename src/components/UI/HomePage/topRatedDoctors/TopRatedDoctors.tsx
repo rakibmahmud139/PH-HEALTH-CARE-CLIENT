@@ -52,7 +52,7 @@ const TopRatedDoctors = async () => {
                   <Image
                     src={doctor?.profilePhoto}
                     width={500}
-                    height={10}
+                    height={100}
                     alt="doctor profile"
                   />
                 </Box>
