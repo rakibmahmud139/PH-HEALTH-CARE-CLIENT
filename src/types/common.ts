@@ -33,3 +33,5 @@ export interface DrawerItem {
   icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string };
   child?: DrawerItem[];
 }
+
+export const Gender = ["MALE", "FEMALE"];
