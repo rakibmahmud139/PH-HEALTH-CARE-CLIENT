@@ -1,8 +1,9 @@
+import { ISchedule } from "@/types/schedule";
 import { tagTypes } from "../tags-type";
 import { baseApi } from "./baseApi";
 import { TMeta } from "@/types";
 
-const doctorApi = baseApi.injectEndpoints({
+const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createSchedule: build.mutation({
       query: (data) => ({
@@ -20,12 +21,12 @@ const doctorApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response: [], meta: TMeta) => {
-        return {
-          schedules: response,
-          meta,
-        };
-      },
+      // transformResponse: (response: ISchedule[], meta: TMeta) => {
+      //   return {
+      //     schedules: response,
+      //     meta,
+      //   };
+      // },
       providesTags: [tagTypes.schedule],
     }),
 
@@ -43,4 +44,4 @@ export const {
   useCreateScheduleMutation,
   useGetAllScheduleQuery,
   useDeleteScheduleMutation,
-} = doctorApi;
+} = scheduleApi;

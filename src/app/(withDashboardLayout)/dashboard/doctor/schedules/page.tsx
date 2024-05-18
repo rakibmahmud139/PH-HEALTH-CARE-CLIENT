@@ -1,33 +1,29 @@
 "use client";
 
-import { Box, Button, IconButton } from "@mui/material";
-import ScheduleModal from "./components/SchedulesModal";
-import { useState, useEffect } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useGetAllScheduleQuery } from "@/redux/api/scheduleApi";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { useGetAllDoctorScheduleQuery } from "@/redux/api/doctorScheduleApi";
 import { dateFormatter } from "@/utils/dateFormatter";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, IconButton } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
-import { ISchedule } from "@/types/schedule";
+import { useEffect, useState } from "react";
+import DoctorScheduleModal from "./components/DoctorScheduleModal";
 
-const SchedulesPage = () => {
+const DoctorSchedulePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [allSchedule, setAllSchedule] = useState<any>([]);
-  const { data, isLoading } = useGetAllScheduleQuery({});
+  const { data, isLoading } = useGetAllDoctorScheduleQuery({});
 
-  const schedules = data?.data;
-  const meta = data?.meta;
-
-  console.log(schedules);
+  const schedules = data;
 
   useEffect(() => {
-    const updateData = schedules?.map((schedule: ISchedule) => {
+    const updateData = schedules?.map((schedule: any) => {
       return {
-        id: schedule?.id,
-        startDate: dateFormatter(schedule.startDateTime),
-        endDate: dateFormatter(schedule.endDateTime),
-        startTime: dayjs(schedule?.startDateTime).format("hh:mm a"),
-        endTime: dayjs(schedule?.endDateTime).format("hh:mm a"),
+        id: schedule?.doctorId,
+        startDate: dateFormatter(schedule?.schedule?.startDateTime),
+        endDate: dateFormatter(schedule?.schedule?.endDateTime),
+        startTime: dayjs(schedule?.schedule?.startDateTime).format("hh:mm a"),
+        endTime: dayjs(schedule?.schedule?.endDateTime).format("hh:mm a"),
       };
     });
     setAllSchedule(updateData);
@@ -56,8 +52,10 @@ const SchedulesPage = () => {
 
   return (
     <Box>
-      <Button onClick={() => setIsModalOpen(true)}>Create Schedule</Button>
-      <ScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
+      <Button onClick={() => setIsModalOpen(true)}>
+        Create Doctor Schedule
+      </Button>
+      <DoctorScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
       {!isLoading ? (
         <Box my={2}>
           <DataGrid rows={allSchedule ?? []} columns={columns} />
@@ -69,4 +67,4 @@ const SchedulesPage = () => {
   );
 };
 
-export default SchedulesPage;
+export default DoctorSchedulePage;
