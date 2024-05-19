@@ -10,7 +10,18 @@ const specialtiesApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+
+    updateMyProfile: build.mutation({
+      query: (data) => ({
+        url: "/user/update-my-profile",
+        method: "PATCH",
+        contentType: "multipart/form-data",
+        data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
-export const { useGetSingleUserQuery } = specialtiesApi;
+export const { useGetSingleUserQuery, useUpdateMyProfileMutation } =
+  specialtiesApi;
