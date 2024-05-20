@@ -49,37 +49,50 @@ const DoctorProfile = () => {
         setOpen={setIsOpenModal}
         id={data?.id}
       />
-      <Container>
-        <Grid container spacing={2}>
+      <Container
+        sx={{
+          mt: 4,
+        }}
+      >
+        <Grid container spacing={4}>
           <Grid xs={12} md={4}>
             <Box
               sx={{
-                width: 300,
-                height: "100%",
+                width: 350,
                 overflow: "hidden",
                 borderRadius: 1,
               }}
             >
               <Image
-                width={300}
+                width={350}
                 height={400}
                 src={data?.profilePhoto}
                 alt="user profile"
               />
             </Box>
-            {updating ? (
-              <p>Uploading......</p>
-            ) : (
-              <AutoFileUploader
-                name="file"
-                label="Choose Your Profile"
-                icon={<CloudUpload />}
-                onFileUpload={fileUploaderHandler}
-                variant="text"
-              />
-            )}
-            <Button fullWidth onClick={() => setIsOpenModal(true)}>
-              Edit Profile <EditIcon sx={{ ml: 1 }} />
+            <Box my={2}>
+              {updating ? (
+                <p>Uploading......</p>
+              ) : (
+                <AutoFileUploader
+                  name="file"
+                  label="Choose Your Profile"
+                  icon={<CloudUpload />}
+                  onFileUpload={fileUploaderHandler}
+                  variant="text"
+                />
+              )}
+            </Box>
+
+            <Button
+              sx={{
+                mb: 2,
+                width: "350px",
+              }}
+              onClick={() => setIsOpenModal(true)}
+              endIcon={<EditIcon />}
+            >
+              Edit Profile
             </Button>
           </Grid>
           <Grid xs={12} md={8}>
